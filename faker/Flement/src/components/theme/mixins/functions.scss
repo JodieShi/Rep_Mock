@@ -1,0 +1,41 @@
+@import "./config";
+
+@function selectorToString($selector) {
+  $selector: inspect($value: $selector);
+  $selector: str-slice($selector, 2, -2);
+  @return $selector;
+}
+
+@function containModifier($selector) {
+  $selector: selectorToString($selector);
+
+  @if str-index($string: $selector, $substring: $modifier-separator) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function containWhenFlag($selector) {
+  $selector: selectorToString($selector);
+
+  @if str-index($string: $selector, $substring: "." + $state-prefix) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function containPseudoClass($selector) {
+  $selector: selectorToString($selector);
+
+  @if str-index($string: $selector, $substring: ":") {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function hitAllSpecialNestRule($selector) {
+  @return containModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+}
