@@ -216,7 +216,32 @@ export default {
       return merge({}, this.textareaClacStyle, { resize: this.resize });
     },
     inputSize() {
-      return this.size || this._faFromItemSize;
+      return this.size || this._faFromItemSize || (this.$FLEMENT || {}).size;
+    },
+    inputDisabled() {
+      return this.disabled || (this.faForm || {}).disabled;
+    },
+    nativeInputValue() {
+      return this.value === null || this.value === undefined
+        ? ""
+        : String(this.value);
+    },
+    showClear() {
+      return (
+        this.clearable &&
+        !this.inputDisabled &&
+        !this.readonly &&
+        this.nativeInputValue &&
+        (this.focused || this.hovering)
+      );
+    },
+    showPwdVisible() {
+      return (
+        this.showPassword &&
+        !this.inputDisabled &&
+        !this.readonly &&
+        (!!this.nativeInputValue || this.focused)
+      );
     },
     isWordLimitVisible() {
       return (
@@ -237,12 +262,153 @@ export default {
       }
 
       return (this.value || "").length;
+    },
+    inputExceed() {
+      // show exceed style if length of initial value greater than maxlength
+      return this.isWordLimitVisible && this.textLength > this.upperLimit;
+    }
+  },
+  watch: {
+    value(val) {
+      this.$nextTick(this.resizeTextarea);
+      if (this.validateEvent) {
+        this.dispatch("FaFormItem", "el.form.change", [val]);
+      }
+    },
+    nativeInputValue() {
+      this.setNativeInputValue();
+    },
+    type() {
+      this.$nextTick(() => {
+        this.setNativeInputValue();
+        this.resizeTextarea();
+        this.updateIconOffset();
+      });
     }
   },
   methods: {
+    focus() {
+      this.getInput().focus();
+    },
+    blur() {
+      this.getInput().blur();
+    },
+    getMigratingConfig() {
+      return {
+        props: {
+          icon: "icon is removed, use suffix-icon / prefix-icon instead",
+          "on-icon-click": "on-icon-click is removed"
+        },
+        events: {
+          click: "click is removed"
+        }
+      };
+    },
+    handleBlur(event) {
+      this.focused = false;
+      this.$emit("blur", event);
+      if (this.validateEvent) {
+        this.dispatch("FaFormItem", "fa.form.blur", [this.value]);
+      }
+    },
+    select() {
+      this.getInput().select();
+    },
+    resizeTextarea() {
+      if (this.$isServer) return;
+      const { autosize, type } = this;
+      if (type !== "textarea") return;
+      if (!autosize) {
+        this.textareaClacStyle = {
+          minHeight: clacTextareaHeight(this.$refs.textarea).minHeight
+        };
+        return;
+      }
+      const minRows = autosize.minRows;
+      const maxRows = autosize.maxRows;
+
+      this.textareaClacStyle = clacTextareaHeight(
+        this.$ref.textarea,
+        minRows,
+        maxRows
+      );
+    },
+    setNativeInputValue() {
+      const input = this.getInput();
+      if (!input) return;
+      if (input.value === this.nativeInputValue) return;
+      input.value = this.nativeInputValue;
+    },
+    handleFocus(event) {
+      this.focus = true;
+      this.$emit("focus", event);
+    },
+    handleCompositionstart() {
+      this.isComposing = true;
+    },
+    handleCompositionUpdate(event) {
+      const text = event.target.value;
+      const lastCharacter = text[text.length - 1] || "";
+      this.isComposing = !isKorean(lastCharacter);
+    },
+    handleCompositionEnd(event) {
+      if (this.isComposing) {
+        this.isComposing = false;
+        this.handleInput(event);
+      }
+    },
+    handleInput(event) {
+      if (this.isComposing) return;
+      if (event.target.value == this.nativeInputValue) return;
+
+      this.$emit("input", event.target.value);
+      this.$nextTick(this.setNativeInputValue);
+    },
+    handleChange(event) {
+      this.$emit("change", event.target.value);
+    },
+    clacIconOffset(place) {
+      let elList = [].slice.call(
+        this.$el.querySelectorAll(`.el-input__${place}`) || []
+      );
+      if (!elList.length) return;
+      let el = null;
+      for (let i = 0; i < elList.length; i++) {
+        if (elList[i].parentNode === this.$el) {
+          el = elList[i];
+          break;
+        }
+      }
+      if (!el) return;
+      const pendantMap = {
+        suffix: "append",
+        prefix: "prepend"
+      };
+
+      const pendant = pendantMap[place];
+      if (this.$slots[pendant]) {
+        el.style.transform = `translateX(${place === "suffix" ? "-" : ""}${
+          this.$el.querySelectorAll(`.el-input-group__${pendant}`).offsetWidth
+        }px)`;
+      } else {
+        el.removeAttribute("style");
+      }
+    },
+    updateIconOffset() {
+      this.clacIconOffset("prefix");
+      this.clacIconOffset("suffix");
+    },
+    clear() {
+      this.$emit("input", "");
+      this.$emit("change", "");
+      this.$emit("clear");
+    },
     handlePasswordVisible() {
       this.passwordVisible = !this.passwordVisible;
       this.focus();
+    },
+    getInput() {
+      return this.$refs.input || this.$refs.textarea;
     },
     getSuffixVisible() {
       return (
@@ -254,6 +420,18 @@ export default {
         (this.validateState && this.needStatusIcon)
       );
     }
+  },
+  created() {
+    this.$on("inputSelect", this.select);
+  },
+
+  mounted() {
+    this.setNativeInputValue();
+    this.resizeTextarea();
+    this.updateIconOffset();
+  },
+  updated() {
+    this.$nextTick(this.updateIconOffset);
   }
 };
 </script>
