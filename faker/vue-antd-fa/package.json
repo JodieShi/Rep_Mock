@@ -1,0 +1,42 @@
+{
+  "name": "vue-antd-fa",
+  "version": "1.0.0",
+  "description": "implementation of vue-antd-admin",
+  "author": "jodie",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "ant-design-vue": "^1.7.4",
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-eslint": "^4.5.11",
+    "@vue/cli-service": "^4.5.11",
+    "babel-eslint": "^10.1.0",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^7.21.0",
+    "eslint-plugin-vue": "^7.7.0",
+    "less-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.12",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  }
+}
