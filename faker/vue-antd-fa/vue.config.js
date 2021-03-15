@@ -1,3 +1,4 @@
+const path = require('path')
 const isProd = process.env.NODE_ENV === 'production'
 
 const assetsCDN = {
@@ -11,6 +12,12 @@ const assetsCDN = {
 }
 
 module.exports = {
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [path.resolve(__dirname, './src/theme/theme.less')]
+    }
+  },
   configureWebpack: config => {
     config.entry.app = ['babel-polyfill', 'whatwg-fetch', './src/main.js']
     config.performance = {
