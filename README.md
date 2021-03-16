@@ -18,3 +18,4 @@ This is a collection of front-end implementation of well-known Apps/Webs.
 ## Revisions
 * 2010-10-19@Jodie: created. Add contents: Fabao, Fahu, FaChat.
 * 2020-12-30@Jodie: Add contents: Flement.
+* 2021-03-15@Jodie: Add contents: vue-antd-fa.
