@@ -78,8 +78,8 @@ export default {
     setLang(state, lang) {
       state.lang = lang
     },
-    setHideSettinng(state, hideSettinng) {
-      state.hideSettinng = hideSettinng
+    setHideSetting(state, hideSetting) {
+      state.hideSetting = hideSetting
     },
     correctPageMinHeight(state, minHeight) {
       state.pageMinHeight += minHeight

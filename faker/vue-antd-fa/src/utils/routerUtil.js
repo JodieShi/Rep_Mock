@@ -22,7 +22,7 @@ function parseRoutes(routesConfig, routerMap) {
   routesConfig.forEach(item => {
     let router = undefined, routeCfg = {}
     if (typeof item === 'string') {
-      router = routerMpa[item]
+      router = routerMap[item]
       routeCfg = {
         path: (router && router.path) || item,
         router: item
@@ -52,7 +52,7 @@ function parseRoutes(routesConfig, routerMap) {
     if (routeCfg.invisible || route.invisible) {
       route.meta.invisible = true
     }
-    if (routeCfg.children && routerCfg.children.length > 0) {
+    if (routeCfg.children && routeCfg.children.length > 0) {
       route.children = parseRoutes(routeCfg.children, routerMap)
     }
     routes.push(route)
@@ -93,7 +93,7 @@ function loadRoutes(routesConfig) {
   const rootRoutes = router.options.routes.find(item => item.path === '/')
   const menuRoutes = rootRoutes && rootRoutes.children
   if (menuRoutes) {
-    store.commit('settinng/setMenuData', menuRoutes)
+    store.commit('setting/setMenuData', menuRoutes)
   }
 }
 
@@ -113,7 +113,7 @@ function deepMergeRoutes(target, source) {
         chidlren: item.children ? mapRoutes(item.children) : undefined
       }
     })
-    return routersMap
+    return routesMap
   }
   const tarMap = mapRoutes(target)
   const srcMap = mapRoutes(source)

@@ -1,6 +1,6 @@
 const view = {
   tabs: () => import('@/layouts/tabs'),
-  blank: () => import('@/layout/BlankView'),
+  blank: () => import('@/layouts/BlankView'),
   page: () => import('@/layouts/PageView')
 }
 
@@ -22,7 +22,7 @@ const routerMap = {
   },
   workplace: {
     name: '工作台',
-    component: () => import('@pages/dashboard/workplace')
+    component: () => import('@/pages/dashboard/workplace')
   },
   analysis: {
     name: '分析页',

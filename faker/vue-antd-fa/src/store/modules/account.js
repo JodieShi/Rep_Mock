@@ -21,7 +21,7 @@ export default {
     permissions: state => {
       if (!state.permissions) {
         try {
-          const permissions = localStorage.getItem(provess.env.VUE_APP_PERMISSIONS_KEY)
+          const permissions = localStorage.getItem(process.env.VUE_APP_PERMISSIONS_KEY)
           state.permissions = JSON.parse(permissions)
           state.permissions = state.permissions ? state.permissions : []
         } catch (error) {

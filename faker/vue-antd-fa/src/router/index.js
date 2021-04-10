@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { formatRoutes } from '@/utils/routerUtil'
 
-Vue.user(Router)
+Vue.use(Router)
 
 const loginIgnore = {
   names: ['404', '403'],

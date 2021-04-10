@@ -29,7 +29,7 @@ function resolveCss(output, srcArr) {
     } else {
       let cssText = ''
       for (let regExp of regExps) {
-        if (regExps[0].test(cssObj.selector)) {
+        if (regExp[0].test(cssObj.selector)) {
           let cssCfg = regExp[1]
           cssText = cssCfg ? cssCfg.resolve(text, cssObj) : ''
           break
@@ -59,9 +59,9 @@ function dropDuplicate(arr) {
 
 function parseCssObj(cssText) {
   let css = {}
-  const ruleIndex = cssRext.indexOf('{')
-  css.selector = cssText.subString(0, ruleIndex)
-  const ruleBody = cssText.subString(ruleIndex + 1, cssText.length - 1)
+  const ruleIndex = cssText.indexOf('{')
+  css.selector = cssText.substring(0, ruleIndex)
+  const ruleBody = cssText.substring(ruleIndex + 1, cssText.length - 1)
   const rules = ruleBody.split(';')
   css.rules = rules
   css.toText = function() {

@@ -43,20 +43,20 @@ function formatFullPath(routes, parentPath = '') {
   })
 }
 
-function mergeI18nFormRoutes(i18n, routes) {
+function mergeI18nFromRoutes(i18n, routes) {
   formatFullPath(routes)
   const CN = generateI18n(new Object(), routes, 'name')
   const US = generateI18n(new Object(), routes, 'path')
   i18n.mergeLocaleMessage('CN', CN)
   i18n.mergeLocaleMessage('US', US)
-  const messages = routesI18n.message
+  const messages = routesI18n.messages
   Object.keys(messages).forEach(lang => {
-    i18n.mergeLocalMessage(lang, messages[lang])
+    i18n.mergeLocaleMessage(lang, messages[lang])
   })
 }
 
 export {
   initI18n,
-  mergeI18nFormRoutes,
+  mergeI18nFromRoutes,
   formatFullPath
 }
