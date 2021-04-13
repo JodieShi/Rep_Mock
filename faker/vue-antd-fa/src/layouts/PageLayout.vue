@@ -29,11 +29,79 @@
 
 <script>
 import PageHeader from '@/components/page/header/PageHeader'
-// import { mapState, mapMutations } from 'vuex'
-// import { getI18nKey } from '@/utils/routerUtil'
+import { mapState, mapMutations } from 'vuex'
+import { getI18nKey } from '@/utils/routerUtil'
 export default {
   name: 'PageLayout',
-  components: { PageHeader }
+  components: { PageHeader },
+  props: ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage'],
+  data() {
+    return {
+      page: {},
+      PageHeaderHeight: 0
+    }
+  },
+  watch: {
+    $route() {
+      this.page = this.$route.meta.page
+    }
+  },
+  updated() {
+    if (!this._inactive) {
+      this.updatePageHeight()
+    }
+  },
+  activated() {
+    this.updatePageHeight()
+  },
+  deactivated() {
+    this.updatePageHeight()
+  },
+  mounted() {
+    this.updatePageHeight()
+  },
+  created() {
+    this.page = this.$route.meta.page
+  },
+  beforeDestroy() {
+    this.updatePageHeight(0)
+  },
+  computed: {
+    ...mapState('setting', ['layout', 'multiPage', 'pageMinHeight', 'pageWidth', 'customTitles']),
+    pageTitle() {
+      let pageTitle = this.page && this.page.title
+      return this.customTitle || (pageTitle && this.$t(pageTitle)) || this.title || this.routeName
+    },
+    routeName() {
+      const route = this.$route
+      return this.$t(getI18nKey(route.matched([route.matched.length - 1]).path))
+    },
+    breadcrumb() {
+      let page = this.page
+      let breadcrumb = page && page.breadcrumb
+      if (breadcrumb) {
+        let i18nBreadcrumb = []
+        breadcrumb.forEach(item => {
+          i18nBreadcrumb.push(this.$t(item))
+        })
+        return i18nBreadcrumb
+      } else {
+        return this.getRouteBreadcrumb()
+      }
+    },
+    marginCorrect() {
+      return this.multiPage ? 24 : 0
+    }
+  },
+  methods: {
+    ...mapMutations('setting', ['correctPageMinHeight']),
+    getRouteBreadcrumb() {
+      let routes = this.$route.matched
+      const path = this.$route.path
+      let breadcrumb = []
+      routes.filter(item => path.includes(item.path))
+    }
+  }
 }
 </script>
 
