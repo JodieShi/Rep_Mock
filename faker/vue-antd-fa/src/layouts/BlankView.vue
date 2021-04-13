@@ -1,13 +1,26 @@
 <template>
-  <div>blank</div>
+  <page-toggle-transition
+    :disabled ="animate.disabled"
+    :animate="animate.name"
+    :direction="animate.direction"
+  >
+    <router-view />
+  </page-toggle-transition>
 </template>
 
 <script>
-export default {
+import PageToggleTransition from '@/components/transitin/PageToggleTransitio'
+import { mapState } from 'vuex'
 
+export default {
+  name: 'BlankView',
+  components: { PageToggleTransition },
+  computed: {
+    ...mapState('setting', ['multiPage', 'animate'])
+  }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
