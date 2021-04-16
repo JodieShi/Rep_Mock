@@ -100,11 +100,50 @@ export default {
       const path = this.$route.path
       let breadcrumb = []
       routes.filter(item => path.includes(item.path))
+        .forEach(route => {
+          const path = route.path.length === 0 ? '/home' : route.path
+          breadcrumb.push(this.$t(getI18nKey(path)))
+        })
+      let pageTitle = this.page && this.page.title
+      if (this.customTitle || pageTitle) {
+        breadcrumb[breadcrumb.length - 1] = this.customTitle || pageTitle
+      }
+      return breadcrumb
+    },
+    udpatePageHeight(newHeight = this.$refs.pageHeader.$el.offsetHeight + this.marginCorrect) {
+      this.correctPageMinHeight(this.pageHeaderHeight - newHeight)
+      this.pageHeaderHeight = newHeight
     }
   }
 }
 </script>
 
-<style>
+<style lang="less">
+.page-header {
+  margin: 0 -24px 0;
+}
 
+.link {
+  line-height: 24px;
+  a {
+    font-size: 14px;
+    margin-right: 32px;
+    i {
+      font-size: 22px;
+      margin-right: 8px;
+    }
+  }
+}
+
+.page-content {
+  position: relative;
+  padding: 24px 0 0;
+  &.side {
+
+  }
+  &.head.fixed {
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+}
 </style>
