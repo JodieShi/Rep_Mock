@@ -44,7 +44,7 @@
             {{ langAlias }}
           </div>
           <a-menu @click="val => setLang(val.key)" :selected-keys="[lang]" slot="overlay">
-            <a-menu-item v-for="lag in langList" :key="lang.key">
+            <a-menu-item v-for="lang in langList" :key="lang.key">
               {{ lang.key.toLowerCase() + ' ' + lang.name }}
             </a-menu-item>
           </a-menu>
@@ -58,7 +58,7 @@
 import HeaderSearch from './HeaderSearch'
 import HeaderNotice from './HeaderNotice'
 import HeaderAvatar from './HeaderAvatar'
-import 'IMenu' from '@/components/menu/menu'
+import IMenu from '@/components/menu/menu'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
