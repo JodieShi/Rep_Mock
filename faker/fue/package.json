@@ -15,6 +15,7 @@
     "rollup-plugin-commonjs": "9.2.0",
     "rollup-plugin-flow-no-whitespace": "1.0.0",
     "rollup-plugin-node-resolve": "4.0.0",
-    "rollup-plugin-replace": "2.0.0"
+    "rollup-plugin-replace": "2.0.0",
+    "typescript": "3.6.4"
   }
 }
