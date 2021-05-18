@@ -1,0 +1,19 @@
+// const saves = ['profile', 'settings']
+// const done = after(saves.length, () => console.log('done saving'))
+// const asyncSave = obj => { obj.complete() }
+// saves.forEach(type => asyncSave({ 'type': type, 'complete': done }))
+
+function after(n, func) {
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function')
+  }
+  n = n || 0
+  return function(...args) {
+    if (--n < 1) {
+      return func.apply(this, args)
+    }
+  }
+}
+
+
+export default after
