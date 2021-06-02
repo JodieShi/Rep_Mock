@@ -3,7 +3,7 @@ function copyArray(source, array) {
   const length = source.length
 
   array || (array = new Array(length))
-  while(++index < length) {
+  while (++index < length) {
     array[index] = source[index]
   }
   return array

@@ -20,7 +20,7 @@ function toNumber(value) {
     value = isObject(other) ? `${other}` : other
   }
   if (typeof value !== 'string') {
-    return value === 0 ? value : + value
+    return value === 0 ? value : +value
   }
   value = value.replace(reTrim, '')
   const isBinary = reIsBinary.test(value)

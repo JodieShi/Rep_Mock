@@ -23,7 +23,7 @@ const rsSeq = rsOptVar + reOptMod + rsOptJoin
 const rsNonAstralCombo = `${rsNonAstral}${rsCombo}?`
 const rsSymbol = `(?:${[rsNonAstralCombo, rsCombo, rsRegional, rsSurrPair, rsAstral].join('|')})`
 
-const reUnicode = regExp(`${rsFitz}(?=${rsFitz})|${rsSymbol + rsSeq}`, 'g')
+const reUnicode = RegExp(`${rsFitz}(?=${rsFitz})|${rsSymbol + rsSeq}`, 'g')
 
 function unicodeToArray(string) {
   return string.match(reUnicode) || []

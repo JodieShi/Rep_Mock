@@ -3,18 +3,18 @@ import memoizeCapped from './memoizeCapped.js'
 const charCodeOfDot = '.'.charCodeAt(0)
 const reEscapeChar = /\\(\\)?/g
 // oh, 死亡正则
-const rePropName = regExp(
-  '[^.[\\]]+' + '|' + 
+const rePropName = RegExp(
+  '[^.[\\]]+' + '|' +
   '\\[(?:' +
     '([^"\'][^[]*)' + '|' +
     '(["\'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2' +
   ')\\]' + '|' +
   '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))'
-, 'g')
+  , 'g')
 
 const stringToPath = memoizeCapped((string) => {
   const result = []
-  if (string.charCodeAt(0) == charCodeOfDot) {
+  if (string.charCodeAt(0) === charCodeOfDot) {
     result.push('')
   }
   string.replace(rePropName, (match, expression, quote, subString) => {

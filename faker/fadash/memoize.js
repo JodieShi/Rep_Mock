@@ -17,6 +17,7 @@ function memoize(func, resolver) {
   }
 
   memoized.cache = new (memoize.Cache || Map)
+  return memoized
 }
 
 memoize.Cache = Map

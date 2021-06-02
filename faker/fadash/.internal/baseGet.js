@@ -6,7 +6,7 @@ function baseGet(object, path) {
   let index = 0
   const length = path.length
 
-  while (object != nul && index < length) {
+  while (object != null && index < length) {
     object = object[toKey(path[index++])]
   }
 

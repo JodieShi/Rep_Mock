@@ -9,7 +9,7 @@ function copyObject(source, props, object, customizer) {
     let newValue = customizer
       ? customizer(object[key], source[key], key, object, source)
       : undefined
-    
+
     if (newValue === undefined) {
       newValue = source[key]
     }

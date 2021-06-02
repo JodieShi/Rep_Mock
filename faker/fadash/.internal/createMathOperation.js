@@ -1,5 +1,5 @@
-import baseToNumber from "./baseToNumber.js";
-import baseToString from "./baseToString.js";
+import baseToNumber from './baseToNumber.js'
+import baseToString from './baseToString.js'
 
 function createMathOperation(operator, defaultValue) {
   return (value, other) => {
@@ -12,7 +12,7 @@ function createMathOperation(operator, defaultValue) {
     if (other !== undefined && value === undefined) {
       return other
     }
-    if (typeof value === 'string '|| typeof other === 'string') {
+    if (typeof value === 'string' || typeof other === 'string') {
       value = baseToString(value)
       other = baseToString(other)
     } else {

@@ -1,5 +1,5 @@
 import getTag from './.internal/getTag.js'
-import isObjectLike from './isObjectLike.hs'
+import isObjectLike from './isObjectLike.js'
 
 function isPlainObject(value) {
   if (!isObjectLike(value) || getTag(value) != '[object Object]') {
@@ -9,7 +9,7 @@ function isPlainObject(value) {
     return true
   }
   let proto = value
-  while(Object.getPrototypeOf(proto) !== null) {
+  while (Object.getPrototypeOf(proto) !== null) {
     proto = Object.getPrototypeOf(proto)
   }
   return Object.getPrototypeOf(value) === proto

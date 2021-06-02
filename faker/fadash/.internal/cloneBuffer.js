@@ -1,4 +1,4 @@
-import root from './root/js'
+import root from './root.js'
 
 const freeExports = typeof exports === 'object' && exports !== null && !exports.nodeType && exports
 

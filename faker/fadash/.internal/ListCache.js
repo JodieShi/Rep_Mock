@@ -20,7 +20,7 @@ class ListCache {
   delete(key) {
     const data = this.__data__
     const index = assocIndexOf(data, key)
-    
+
     if (index < 0) {
       return false
     }

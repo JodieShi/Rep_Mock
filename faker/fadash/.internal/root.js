@@ -1,3 +1,4 @@
+/* global globalThis, self */
 import freeGlobal from './freeGlobal.js'
 
 const freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object == Object && globalThis
