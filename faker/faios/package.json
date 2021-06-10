@@ -1,0 +1,14 @@
+{
+  "name": "faios",
+  "version": "1.0.0",
+  "description": "mock ajax-io-system(axios) by jodie",
+  "main": "index.js",
+  "scripts": {
+    "fix": "eslint --fix lib/**/*.js"
+  },
+  "author": "Jodie",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-eslint": "^23.0.0"
+  }
+}
