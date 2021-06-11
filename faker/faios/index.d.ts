@@ -1,3 +1,52 @@
+export interface FaiosTransformer {
+  (data: any, header?: any): any;
+}
+
+export interface FaiosAdapter {
+  (config: FaiosRequseConfig): FaiosPromise<any>;
+}
+
+export interface FaiosBasicCredentials {
+  username: string;
+  password: string;
+}
+
+export interface FaiosProxyConfig {
+  host: string;
+  port: number;
+  auth?: {
+    username: string;
+    password: string;
+  };
+  protocol?: string;
+}
+
+export type Method =
+  | 'get' | 'GET'
+  | 'delete' | 'DELETE'
+  | 'head' | 'HEAD'
+  | 'options' | 'OPTIONS'
+  | 'post' | 'POST'
+  | 'put' | 'PUT'
+  | 'patch' | 'PATCH'
+  | 'purge' | 'PURGE'
+  | 'link' | 'LINK'
+  | 'unlink' | 'UNLINK'
+
+export type ResponseType =
+  | 'arraybuffer'
+  | 'blob'
+  | 'document'
+  | 'json'
+  | 'text'
+  | 'stream'
+
+export interface TransitionalOptions {
+  silentJSONParsing: boolean;
+  forcedJSONParsing: boolean;
+  clarifyTimeoutError: boolean;
+}
+
 export interface FaiosRequseConfig {
   url?: string;
   method?: string;
@@ -9,6 +58,26 @@ export interface FaiosRequseConfig {
   parmasSerializer?: (params: any) => string;
   data?: any;
   timeout?: number;
+  timeoutErrorMessage?: string;
+  withCredentials?: boolean;
+  adapter?: FaiosAdapter;
+  auth?: FaiosBasicCredentials;
+  responseType?: ResponseType;
+  xsrfCookieName?: string;
+  xsrfHeaderName?: string;
+  onUploadProgress?: (progressEvent: any) => void;
+  onDownloadProgress?: (progressEvent: any) => void;
+  maxContentLength?: number;
+  validateStatus?: ((status: number) => boolean) | null;
+  maxBodyLength?: number;
+  maxRedirects?: number;
+  socketPath?: string | null;
+  httpAgent?: any;
+  httpsAgent?: any;
+  proxy?: FaiosProxyConfig | false;
+  cancelToken?: CancelToken;
+  decompress?: boolean;
+  transition?: TransitionalOptions
 }
 
 export interface FaiosResponse<T = any> {
@@ -37,6 +106,10 @@ export interface CancelStatic {
 }
 
 export interface Cancel {
+  message: string;
+}
+
+export interface Canceler {
   (message?: string): void;
 }
 
