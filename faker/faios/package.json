@@ -12,8 +12,18 @@
     "grunt-eslint": "^23.0.0",
     "typescript": "^4.0.5"
   },
+  "browsers": {
+    "./lib/adapters/http.js": "./lib/adapters/xhr.js"
+  },
+  "jsdelivr": "dist/faios.min.js",
   "typings": "./index.d.ts",
   "dependencies": {
     "follow-redirects": "^1.14.0"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./dist/faios.min.js",
+      "threshold": "5kB"
+    }
+  ]
 }
